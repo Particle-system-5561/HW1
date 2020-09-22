@@ -2,7 +2,7 @@
 //Zihe Fan <fanxx478@umn.edu>
 //add name here <>
 
-static int numBoids = 50;
+static int numBoids = 1000;
 
 // initial pos, vel and acc.
 Vec3 pos[] = new Vec3[numBoids];
@@ -122,6 +122,8 @@ void draw(){
   fill(10,120,10);
   for (int i = 0; i < numBoids; i++){
     // how to draw that????????
-    //circle(pos[i].x, pos[i].y,radius*2); 
+    circle(pos[i].x, pos[i].y, pos[i].z, radius*2); 
   }
+  
+  updateStatus();
 }
