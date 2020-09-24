@@ -17,6 +17,7 @@ int numParticles = 0;
 
 PImage img;
 PImage img1;
+PFont font;
 
 void setup(){
   size(960, 960, P3D);
@@ -24,6 +25,7 @@ void setup(){
   strokeWeight(2); //Draw thicker lines 
   img = loadImage("water.jpg");
   img1 = loadImage("tree.jpg");
+  font = createFont("Times New Roman", 48);
 
 }
 
@@ -66,18 +68,18 @@ void update(float dt){
         pos[i].y = height - r;
         vel[i].y *= -COR;
       }
-      //if (pos[i].y < r){
-      //  pos[i].y = r;
-      //  vel[i].y *= -COR;
-      //}
-      //if (pos[i].x > width - r){
-      //  pos[i].x = width - r;
-      //  vel[i].x *= -COR;
-      //}
-      //if (pos[i].x < r){
-      //  pos[i].x = r;
-      //  vel[i].x *= -COR;
-      //}
+      if (pos[i].y < r){
+        pos[i].y = r;
+        vel[i].y *= -COR;
+      }
+      if (pos[i].x > width - r){
+        pos[i].x = width - r;
+        vel[i].x *= -COR;
+      }
+      if (pos[i].x < r){
+        pos[i].x = r;
+        vel[i].x *= -COR;
+      }
     }
   }
   
@@ -101,6 +103,7 @@ void mouseReleased() {
 
 void drawPicture(){
   // water
+  pushMatrix();
   translate(width/2, 0, -width/2);
   //PImage img=loadImage("water.jpg");
   beginShape();
@@ -143,13 +146,18 @@ void drawPicture(){
   vertex(width/2,height/2,0,img1.width,img1.height);
   vertex(-width/2,height/2,0,0,img1.height);
   endShape();
+  popMatrix();
 }
 
 void draw(){
   //if (!paused) update(1.0/frameRate);
   update(1.0/frameRate);
   background(#87CEEB);
+  //background(255);
   drawPicture();
+  textFont(font, int(width*0.08));
+  fill(0);
+  text("Frame rate:" + int(frameRate), 0, 0, -width);
   
   if (camaraMove){
     camera(mouseX, mouseY, width, // eyeX, eyeY, eyeZ
@@ -168,6 +176,7 @@ void draw(){
     translate(pos[i].x, pos[i].y, pos[i].z);
     
     fill(127*life[i]/maxLifeTime,255*life[i]/maxLifeTime,212*life[i]/maxLifeTime);
+        //fill(255-128*life[i]/maxLifeTime,255-1*life[i]/maxLifeTime,255-44*life[i]/maxLifeTime);
     //stroke(0,0,255*life[i]/maxLifeTime);
     //strokeWeight(30*life[i]/maxLifeTime);
     sphere(r);
