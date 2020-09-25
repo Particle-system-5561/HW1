@@ -150,8 +150,8 @@ void drawPicture(){
 }
 
 void draw(){
-  //if (!paused) update(1.0/frameRate);
-  update(1.0/frameRate);
+  if (!paused) update(1.0/frameRate);
+  //update(1.0/frameRate);
   background(#87CEEB);
   //background(255);
   drawPicture();
